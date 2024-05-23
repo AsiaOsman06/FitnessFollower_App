@@ -18,13 +18,15 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register', (req, res, next) => {
+  const firstname = req.body.firstname;
+  const lastname = req.body.lastname;
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
 
-  const queryText = `INSERT INTO "user" (username, password)
-    VALUES ($1, $2) RETURNING id`;
+  const queryText = `INSERT INTO "user" (firstname,lastname,username, password)
+    VALUES ($1, $2, $3,$4) RETURNING id`;
   pool
-    .query(queryText, [username, password])
+    .query(queryText, [firstname,lastname,username, password])
     .then(() => res.sendStatus(201))
     .catch((err) => {
       console.log('User registration failed: ', err);
@@ -40,11 +42,14 @@ router.post('/login', userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
 });
 
-// clear all server session information about this user
-router.post('/logout', (req, res) => {
+router.post("/logout", (req, res) => {
   // Use passport's built-in method to log out the user
-  req.logout();
-  res.sendStatus(200);
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 });
 
 module.exports = router;

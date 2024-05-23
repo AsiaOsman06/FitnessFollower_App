@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import Exercise from '../Exercise/Exercise';
 
 import './App.css';
 
@@ -28,16 +29,20 @@ function App() {
   const user = useSelector(store => store.user);
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_USER' });
+    dispatch({ type: 'FETCH_USER' 
+  });
   }, [dispatch]);
+  
 
+ 
+ 
   return (
     <Router>
       <div>
         <Nav />
         <Switch>
-          {/* Visiting localhost:5173 will redirect to localhost:5173/home */}
-          <Redirect exact from="/" to="/home" />
+          {/* Visiting localhost:5173 will redirect to localhost:5173/ */}
+          <Redirect exact from="/" to="/exercise" />
 
           {/* Visiting localhost:5173/about will show the about page. */}
           <Route
@@ -81,6 +86,13 @@ function App() {
               <LoginPage />
             }
           </Route>
+          <Route
+            // shows AboutPage at all times (logged in or not)
+            exact
+            path="/exercise"
+          >
+            <Exercise />
+          </Route>
 
           <Route
             exact
@@ -98,7 +110,7 @@ function App() {
 
           <Route
             exact
-            path="/home"
+            path="/exercise"
           >
             {user.id ?
               // If the user is already logged in, 

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import './WorkoutPlan.css';
+// import './WorkoutPlan.css';
 
 function WorkoutPlan() {
   const user = useSelector((store) => store.user);
@@ -57,21 +57,21 @@ function WorkoutPlan() {
       type: "DELETE_WORKOUTPLAN",
       payload: id
     });
-    // history.replace('/workoutplan')
+    
   };
 
-  const updateWorkoutPlan = (id) => {
-    console.log('Deleting workout plan ID:', id);
-    dispatch({
-      type: "UPDATE_WORKOUTPLAN",
-      payload: id
-    });
-    // history.replace('/workoutplan')
-  };
+  // const updateWorkoutPlan = (id) => {
+  //   console.log('Deleting workout plan ID:', id);
+  //   dispatch({
+  //     type: "UPDATE_WORKOUTPLAN",
+  //     payload: id
+  //   });
+   
+  // };
 
   // Populate the days object with workouts based on the day of the week
   workouts_plan.forEach(workout => {
-    const dayKey = workout.dayOfWeek.toLowerCase(); // Convert to lowercase to handle case insensitivity
+    const dayKey = workout.dayOfWeek.toLowerCase();
     if (days[dayKey]) {
       days[dayKey].push(workout);
     }
@@ -124,7 +124,7 @@ function WorkoutPlan() {
                       {
                         workout.isComplete ? 'Completed' : 'Not Completed'
                       }
-                      </button>
+                      </button> 
                     </div>
                   </div>
                   

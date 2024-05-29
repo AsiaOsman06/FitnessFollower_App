@@ -12,7 +12,8 @@ function Exercise() {
 
   useEffect(() => {
     dispatch({
-      type: "FETCH_EXERCISES",
+      type: "FETCH_EXERCISES"
+      // payload: id
     });
   }, [dispatch]);
 
@@ -65,7 +66,7 @@ function Exercise() {
             <th>Name</th>
             <th>Type</th>
             <th>Exercise Duration</th>
-            <th>Actions</th>  {/* Added a header for Actions */}
+            <th>Actions</th>
           </tr>
         </thead>
         {exercises.map((exercise) => (
@@ -75,7 +76,7 @@ function Exercise() {
               <td>{exercise.type}</td>
               <td>{exercise.exercise_duration}</td>
               <td>
-                <button onClick={() => deleteExercise(exercise.id)}>Delete</button>  {/* Delete button */}
+                <button onClick={() => deleteExercise(exercise.id)}>Delete</button>  
               </td>
             </tr>
           </tbody>

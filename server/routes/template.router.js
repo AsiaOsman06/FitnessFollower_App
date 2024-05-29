@@ -51,7 +51,7 @@ router.delete("/:id", (req, res) => {
   pool
     .query(query, [id])
     .then(() => {
-      res.sendStatus(204);
+      res.sendStatus(201);
     })
     .catch((err) => {
       console.log("ERROR: Delete workout plan by id", err);

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
+import './WorkoutPlan.css';
 
 function WorkoutPlan() {
   const user = useSelector((store) => store.user);
@@ -16,6 +17,10 @@ function WorkoutPlan() {
   useEffect(() => {
     if (user.id) { // Ensure user.id is available before dispatching
       console.log("Fetching workouts for user ", user.id);
+    
+        dispatch({
+          type: "FETCH_WORKOUTS"
+        });
       dispatch({
         type: 'FETCH_WORKOUT_PLANS', 
         payload: user.id
@@ -50,6 +55,15 @@ function WorkoutPlan() {
     console.log('Deleting workout plan ID:', id);
     dispatch({
       type: "DELETE_WORKOUTPLAN",
+      payload: id
+    });
+    // history.replace('/workoutplan')
+  };
+
+  const updateWorkoutPlan = (id) => {
+    console.log('Deleting workout plan ID:', id);
+    dispatch({
+      type: "UPDATE_WORKOUTPLAN",
       payload: id
     });
     // history.replace('/workoutplan')
@@ -100,10 +114,18 @@ function WorkoutPlan() {
         <tbody>
           <tr>
             {Object.values(days).map((dayWorkouts, index) => (
-              <td key={index}>
+              <td key={index} >
                 {dayWorkouts.map((workout, index) => (
-                  <div key={index}>{workout.name}
-                  <button onClick={() => deleteWorkoutPlan(workout.id)}>Delete</button>
+                  <div key={index} >
+                    {workout.name}
+                    <button onClick={() => deleteWorkoutPlan(workout.id)}>Delete</button>
+                   <div >
+                    <button  className={workout.isComplete ? "green-background" : null}onClick={() => updateWorkoutPlan(workout.id)}>
+                      {
+                        workout.isComplete ? 'Completed' : 'Not Completed'
+                      }
+                      </button>
+                    </div>
                   </div>
                   
                   

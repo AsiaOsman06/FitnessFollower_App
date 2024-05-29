@@ -1,10 +1,10 @@
-import { takeEvery, put,call,all } from "redux-saga/effects";
+import { takeEvery, put } from "redux-saga/effects";
 import axios from "axios";
 
 function* fetchWorkoutPlans(action) {
   try {
     console.log("in saga, ", action)
-    const workoutPlan = yield axios.get(`/api/workout/workoutPlan/${action.payload}`);
+    const workoutPlan = yield axios.get(`/api/workout/workoutPlan`);
     console.log("get plan:", workoutPlan.data);
     yield put({
       type: "SET_WORKOUT_PLANS",
@@ -27,7 +27,7 @@ function* postWorkoutPlan(action) {
   }
 }
 
-function* deleteExercise(action) {
+function* deleteWorkPlan(action) {
   try {
     const config = {
       headers: { "Content-Type": "application/json" },
@@ -35,16 +35,33 @@ function* deleteExercise(action) {
     };
     console.log(action.payload)
     yield axios.delete(`/api/workout/workoutPlan/${action.payload}`, config);
+    yield put({type: 'FETCH_WORKOUT_PLANS'})
   } catch (error) {
     console.log("Error deleting exercise:", error);
   }
 }
 
 
+
+function* updateWorkPlan(action) {
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
+    console.log(action.payload);
+    yield axios.put(`/api/workout/workoutPlan/${action.payload}`, config);
+    yield put({ type: "FETCH_WORKOUT_PLANS" });
+  } catch (error) {
+    console.log("Error update workoutplan:", error);
+  }
+}
 function* workoutPlanSaga() {
   yield takeEvery("FETCH_WORKOUT_PLANS", fetchWorkoutPlans);
   yield takeEvery("ADD_WORKOUT", postWorkoutPlan);
-  yield takeEvery("DELETE_WORKOUTPLAN", deleteExercise);
+  yield takeEvery("DELETE_WORKOUTPLAN", deleteWorkPlan);
+   yield takeEvery("UPDATE_WORKOUTPLAN", updateWorkPlan);
+
 }
 
 export default workoutPlanSaga;

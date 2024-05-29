@@ -42,7 +42,7 @@ function* deleteExercise(action) {
       withCredentials: true,
     };
     yield axios.delete(`/api/exercise/${action.payload}`, config);
-
+;  yield put({type: "FETCH_EXERCISES"});
   } catch (error) {
     console.log("Error deleting exercise:", error);
 

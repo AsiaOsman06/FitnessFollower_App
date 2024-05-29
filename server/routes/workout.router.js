@@ -20,11 +20,22 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/workoutPlan/:id", (req, res) => {
-  const id = req.params.id;
+router.get("/workoutPlan", (req, res) => {
+  const id = req.user.id;
   const query = `
-    SELECT * FROM "workout_plan" 
-    JOIN "workout" ON "workoutId"="workout"."id" WHERE "user_id" = $1;
+    SELECT
+      "workout_plan"."id",
+      "workout_plan"."user_id",
+      "workout_plan"."dayOfWeek",
+      "workout_plan"."workoutId",
+      "workout_plan"."isComplete",
+      "workout"."name",
+      "workout"."duration"
+     FROM "workout_plan" 
+    JOIN "workout" 
+    ON "workoutId"="workout"."id" 
+    
+    WHERE "user_id" = $1;
   `;
   pool
     .query(query, [id])
@@ -60,12 +71,12 @@ router.post("/workoutPlan", (req, res) => {
 
 
 
-router.delete("/workoutPlan/workoutId", (req, res) => {
+router.delete("/workoutPlan/:workoutId", (req, res) => {
   // POST route code here
-  const id = req.params.id;
-  const query = `DELETE FROM "workout_plan" WHERE "workoutId" = $1;`;
+  const workoutId = req.params.workoutId;
+  const query = `DELETE FROM "workout_plan" WHERE "id" = $1;`;
   console.log("QUERY: ", query);
-  console.log("ID: ", id);
+  console.log("ID: ", workoutId);
 
   pool
     .query(query, [workoutId])
@@ -73,25 +84,25 @@ router.delete("/workoutPlan/workoutId", (req, res) => {
       res.sendStatus(204);
     })
     .catch((err) => {
-      console.log("ERROR: Delete workout plan by id", err);
+      console.log("ERROR: Delete workout plan by workoutId", err);
       res.sendStatus(500);
     });
 });
 
-// router.put("/workoutPlan/:id", (req, res) => {
-//   // POST route code here
-//   const id = req.params.id;
-//   const isComplete = req.body.isComplete;
-//   const query = `UPDATE "workout_plan" SET "isComplete" = $1 WHERE "id" = $2;`;
-//   pool
-//     .query(query, [isComplete, id])
-//     .then((result) => {
-//       res.send(result.rows);
-//     })
-//     .catch((err) => {
-//       console.log("ERROR: Put workout plan by id", err);
-//       res.sendStatus(500);
-//     });
-// });
+router.put("/workoutPlan/:id", (req, res) => {
+  // POST route code here
+  const id = req.params.id;
+  const isComplete = req.body.isComplete;
+  const query = `UPDATE "workout_plan" SET "isComplete" = $1 WHERE "id" = $2;`;
+  pool
+    .query(query, [!isComplete, id])
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log("ERROR: Put workout plan by id", err);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;

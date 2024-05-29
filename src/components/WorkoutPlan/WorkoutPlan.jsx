@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
-// import './WorkoutPlan.css';
+import './WorkoutPlan.css';
 
 function WorkoutPlan() {
   const user = useSelector((store) => store.user);

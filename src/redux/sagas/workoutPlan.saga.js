@@ -43,24 +43,24 @@ function* deleteWorkPlan(action) {
 
 
 
-// function* updateWorkPlan(action) {
-//   try {
-//     const config = {
-//       headers: { "Content-Type": "application/json" },
-//       withCredentials: true,
-//     };
-//     console.log(action.payload);
-//     yield axios.put(`/api/workout/workoutPlan/${action.payload}`, config);
-//     yield put({ type: "FETCH_WORKOUT_PLANS" });
-//   } catch (error) {
-//     console.log("Error update workoutplan:", error);
-//   }
-// }
+function* updateWorkPlan(action) {
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
+    console.log(action.payload);
+    yield axios.put(`/api/workout/workoutPlan/${action.payload}`, config);
+    yield put({ type: "FETCH_WORKOUT_PLANS" });
+  } catch (error) {
+    console.log("Error update workoutplan:", error);
+  }
+}
 function* workoutPlanSaga() {
   yield takeEvery("FETCH_WORKOUT_PLANS", fetchWorkoutPlans);
   yield takeEvery("ADD_WORKOUT", postWorkoutPlan);
   yield takeEvery("DELETE_WORKOUTPLAN", deleteWorkPlan);
-  //  yield takeEvery("UPDATE_WORKOUTPLAN", updateWorkPlan);
+   yield takeEvery("UPDATE_WORKOUTPLAN", updateWorkPlan);
 
 }
 

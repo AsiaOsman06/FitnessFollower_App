@@ -60,14 +60,14 @@ function WorkoutPlan() {
     
   };
 
-  // const updateWorkoutPlan = (id) => {
-  //   console.log('Deleting workout plan ID:', id);
-  //   dispatch({
-  //     type: "UPDATE_WORKOUTPLAN",
-  //     payload: id
-  //   });
+  const updateWorkoutPlan = (id) => {
+    console.log('Deleting workout plan ID:', id);
+    dispatch({
+      type: "UPDATE_WORKOUTPLAN",
+      payload: id
+    });
    
-  // };
+  };
 
   // Populate the days object with workouts based on the day of the week
   workouts_plan.forEach(workout => {

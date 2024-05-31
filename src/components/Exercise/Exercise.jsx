@@ -13,9 +13,8 @@ function Exercise() {
   useEffect(() => {
     dispatch({
       type: "FETCH_EXERCISES"
-      // payload: id
     });
-  }, [dispatch]);
+  }, []);
 
   const addExercise = () => {
     console.log('Adding exercise:', { name, type, exercise_duration: duration });

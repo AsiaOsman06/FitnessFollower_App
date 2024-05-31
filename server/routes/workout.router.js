@@ -100,7 +100,7 @@ router.put("/workoutPlan/:id", (req, res) => {
       res.send(result.rows);
     })
     .catch((err) => {
-      console.log("ERROR: Put workout plan by id", err);
+      console.log("ERROR: update workout plan by id", err);
       res.sendStatus(500);
     });
 });

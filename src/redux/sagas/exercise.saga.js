@@ -28,10 +28,10 @@ function* addExercise(action) {
       withCredentials: true,
     };
     const response = yield axios.post("/api/exercise", action.payload, config);
-    yield put({ type: "ADD_EXERCISE", payload: response.data });
+    yield put({ type: "FETCH_EXERCISES"});
   } catch (error) {
     console.log("Error adding exercise:", error);
-    yield put({ type: "ADD_EXERCISE_FAILURE", error });
+    // yield put({ type: "ADD_EXERCISE_FAILURE", error });
   }
 }
 
@@ -42,7 +42,7 @@ function* deleteExercise(action) {
       withCredentials: true,
     };
     yield axios.delete(`/api/exercise/${action.payload}`, config);
-;  yield put({type: "FETCH_EXERCISES"});
+ yield put({type: "FETCH_EXERCISES"});
   } catch (error) {
     console.log("Error deleting exercise:", error);
 
